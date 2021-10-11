@@ -66,7 +66,7 @@ public class Bot extends TelegramLongPollingBot {
                         }
                         break;
                     case "/source":
-                        sendMsg("");
+                        sendMsg("https://github.com/ShishkinPavel/chattybot");
                         break;
                     case "women":
                         sendMsg("Lol no, i don't. I'm a bot, not a clairvoyant");
