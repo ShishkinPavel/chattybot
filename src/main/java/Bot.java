@@ -41,7 +41,7 @@ public class Bot extends TelegramLongPollingBot {
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
-            String message_text = update.getMessage().getText().toLowerCase(Locale.ROOT);
+            String message_text = update.getMessage().getText().trim().toLowerCase(Locale.ROOT);
             chat_id = update.getMessage().getChatId();
 
             try{
@@ -118,7 +118,7 @@ public class Bot extends TelegramLongPollingBot {
             }
         }
         // Also, I need to replace my "base currency" and delete all [,.!?] from the end of the line
-        s = s.replace("russian ruble", "RUB").
+        s = s.replace("russian ruble", "RUB").replaceFirst("^[^a-zA-Z]+", "").
                 replaceAll("\\s*\\p{Punct}+\\s*$", "");
         // kinda cringe, sorry
         Pattern pattern = Pattern.compile
