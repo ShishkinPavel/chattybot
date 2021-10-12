@@ -131,13 +131,16 @@ public class Bot extends TelegramLongPollingBot {
         // because you always need to work with the end of the line
         List<String> list = Arrays.asList(s.split("\\s+"));
         Collections.reverse(list);
-        currency.setCurrency(list.get(0));
-        double cur = currency.getCurrency();
         double amount = NumberFormat.getNumberInstance(Locale.FRANCE).parse(list.get(3)).doubleValue();
         if (Objects.equals(list.get(2).toUpperCase(Locale.ROOT), "RUB")){
-            return String.format("%.2f",amount / cur) + " " + list.get(0);
+            currency.setCurrency(list.get(0));
+            return String.format("%.2f",amount / currency.getCurrency()) + " " + list.get(0);
+        }else if (Objects.equals(list.get(0).toUpperCase(Locale.ROOT), "RUB")){
+            currency.setCurrency(list.get(2));
+            return String.format("%.2f",amount * currency.getCurrency()) + " " + list.get(0);
         } else {
-            double first = amount / cur;
+            currency.setCurrency(list.get(0));
+            double first = amount / currency.getCurrency();
             currency.setCurrency(list.get(2));
             double second = amount / currency.getCurrency();
             return String.format("%.2f",(amount * first/second)) + " " + list.get(0).toUpperCase(Locale.ROOT);
