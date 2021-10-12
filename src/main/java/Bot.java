@@ -134,10 +134,10 @@ public class Bot extends TelegramLongPollingBot {
         double amount = NumberFormat.getNumberInstance(Locale.FRANCE).parse(list.get(3)).doubleValue();
         if (Objects.equals(list.get(2).toUpperCase(Locale.ROOT), "RUB")){
             currency.setCurrency(list.get(0));
-            return String.format("%.2f",amount / currency.getCurrency()) + " " + list.get(0);
+            return String.format("%.2f",amount / currency.getCurrency()) + " " + list.get(0).toUpperCase(Locale.ROOT);
         }else if (Objects.equals(list.get(0).toUpperCase(Locale.ROOT), "RUB")){
             currency.setCurrency(list.get(2));
-            return String.format("%.2f",amount * currency.getCurrency()) + " " + list.get(0);
+            return String.format("%.2f",amount * currency.getCurrency()) + " " + list.get(0).toUpperCase(Locale.ROOT);
         } else {
             currency.setCurrency(list.get(0));
             double first = amount / currency.getCurrency();
