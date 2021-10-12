@@ -47,29 +47,23 @@ public class Bot extends TelegramLongPollingBot {
             try{
                 switch (message_text){
                     case "/start":
-                        for (String str:
-                             new String[]{"Hi, I'm Chatty!", "I can tell jokes and exchange rates",
-                                     "You will find out the available commands by typing /help",
-                                     "Also, you can get a link to the project by entering /source",
-                                     "How can I help you?"}) {
-                            TimeUnit.SECONDS.sleep(random.nextInt(2) + 1);
-                            sendMsg(str);
-                        }
-                            break;
+                        sendMsg("Hi, I'm Chatty! \uD83E\uDD16\nI can tell jokes and exchange rates \uD83D\uDCB1\n" +
+                                    "You will find out the available commands by typing /help \uD83E\uDD13\n" +
+                                    "Also, you can get a link to the project by entering /source " +
+                                "\uD83D\uDC68\uD83C\uDFFB\u200D\uD83D\uDCBB\n" +
+                                    "How can I help you? \uD83D\uDC40");
+                        break;
                     case "/help":
-                        for (String str:
-                                new String[]{"Examples of what I understand:", "\"Can you tell me a joke?\"",
-                                        "\"Tell me a joke\"", "\"Convert 42 US Dollar to Euro\"",
-                                        "Women", "\"How much is 69 Hungarian Forint in S.African Rand?\""}) {
-                            TimeUnit.SECONDS.sleep(random.nextInt(2) + 1);
-                            sendMsg(str);
-                        }
+                        TimeUnit.SECONDS.sleep(random.nextInt(2) + 1);
+                        sendMsg("Examples of what I understand:\nCan you tell me a joke?\n" +
+                                        "Tell me a joke\nConvert 42 US Dollar to Euro\nWomen" +
+                                "\nHow much is 69 Hungarian Forint in S.African Rand?");
                         break;
                     case "/source":
                         sendMsg("https://github.com/ShishkinPavel/chattybot");
                         break;
                     case "women":
-                        sendMsg("Lol no, i don't. I'm a bot, not a clairvoyant");
+                        sendMsg("Lol no, i don't. I'm a bot, not a clairvoyant \uD83E\uDDD9\uD83C\uDFFB\u200D♂️");
                         break;
                     default:
                             sendMsg(getValue(message_text.toLowerCase(Locale.ROOT)));
@@ -92,7 +86,6 @@ public class Bot extends TelegramLongPollingBot {
 
         try {
             execute(message);
-            // Sending message object to user
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -122,8 +115,8 @@ public class Bot extends TelegramLongPollingBot {
                 replaceAll("\\s*\\p{Punct}+\\s*$", "");
         // kinda cringe, sorry
         Pattern pattern = Pattern.compile
-                ("convert\\s+[+-]?([0-9]*[.|,])?[0-9]+\\s+[A-Z]{3}\\s+to\\s+[A-Z]{3}|"+
-                        "how\\s+much\\s+is\\s+[+-]?([0-9]*[.|,])?[0-9]+\\s+[A-Z]{3}\\s+in\\s+[A-Z]{3}");
+                ("convert\\s+[+-]?([0-9]*[.|,])?[0-9]+\\s+[A-Za-z]{3}\\s+to\\s+[A-Za-z]{3}|"+
+                        "how\\s+much\\s+is\\s+[+-]?([0-9]*[.|,])?[0-9]+\\s+[A-Za-z]{3}\\s+in\\s+[A-Za-z]{3}");
 
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()){
@@ -141,13 +134,13 @@ public class Bot extends TelegramLongPollingBot {
         currency.setCurrency(list.get(0));
         double cur = currency.getCurrency();
         double amount = NumberFormat.getNumberInstance(Locale.FRANCE).parse(list.get(3)).doubleValue();
-        if (Objects.equals(list.get(2), "RUB")){
+        if (Objects.equals(list.get(2).toUpperCase(Locale.ROOT), "RUB")){
             return String.format("%.2f",amount / cur) + " " + list.get(0);
         } else {
             double first = amount / cur;
             currency.setCurrency(list.get(2));
             double second = amount / currency.getCurrency();
-            return String.format("%.2f",(amount * first/second)) + " " + list.get(0);
+            return String.format("%.2f",(amount * first/second)) + " " + list.get(0).toUpperCase(Locale.ROOT);
         }
     }
 

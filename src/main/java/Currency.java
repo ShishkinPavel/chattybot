@@ -39,7 +39,7 @@ public class Currency {
     }
 
     public void setCurrency(String name) throws ParseException {
-        currency = findCurrency(name);
+        currency = findCurrency(name.toUpperCase(Locale.ROOT));
     }
 
     private double findCurrency(String name) throws ParseException {
